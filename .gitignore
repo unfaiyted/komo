@@ -1,4 +1,5 @@
 /.idea/
+*.iml
 komorebic.exe
 komorebi.exe
 /node_modules/
