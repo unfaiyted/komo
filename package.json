@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "main": "setup.js",
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "clear": "^0.1.0",
+    "colors": "^1.4.0",
+    "commander": "^9.4.0",
+    "hotkeys-js": "^3.9.4",
+    "inquirer": "^9.1.0",
+    "node-global-key-listener": "^0.1.1"
+  }
+}
