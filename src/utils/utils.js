@@ -72,6 +72,9 @@ export const getRoot = (url) => {
  * what the new value will be after the change. If the number goes over
  * the max it will return the value wrapping back at zero. Otherwise if it goes below
  * zero it will return the highest value.
+ *
+ *
+ *todo: this function would break if the number exceeds the max number by a large amount
  * @param number
  * @param max
  * @param change

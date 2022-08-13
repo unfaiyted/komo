@@ -92,6 +92,8 @@ v.addListener(async function (e, down) {
     isPressed(e, "TAB", cycleLayoutModifiers, () => app.exec(app.cycleWorkspace("next")))
     isPressed(e, "TAB", ["RIGHT ALT", "RIGHT SHIFT"], () => app.exec(app.cycleWorkspace("previous")))
 
+    isPressed(e, "F1", cycleLayoutModifiers, () => app.exec(app.restart(setup)));
+
 
 }).then(() => console.log(chalk.green("Added keypress listener")));
 const app = new Komo();
@@ -173,7 +175,12 @@ const setupActions = [
     app.completeConfiguration()
 ];
 
-await executeInOrder(setupActions, __approot);
+const setup = async () => {
+    await executeInOrder(setupActions, __approot);
+}
+
+await setup();
+
 
 
 await keypress();

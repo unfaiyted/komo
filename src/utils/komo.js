@@ -1,16 +1,30 @@
+import KomoWorkspace from "./workspace.js";
+
 const appName = "komorebic.exe"
 import {exec, spawn} from "child_process";
 import { layouts}   from "./constants.js"
-import { wrapNumber} from "./utils.js"
-
+import {sleep, wrapNumber} from "./utils.js"
+import chalk from "chalk"
 
 //TODO? builder?
 export default class Komo {
 
-    constructor() {
-        this.layoutIndex = 0;
-        this.workspaceCount = 5; // could be configurable sometime
+    constructor(workspaceCount = 5) {
+
+        this.workspaceCount = workspaceCount; // could be configurable sometime
         this.currentWorkspace = 0;
+        this.currentMonitor = 0;
+
+        this.workspace = [];
+
+        for(let i = 0; i < this.workspaceCount; i++) {
+            this.workspace.push(new KomoWorkspace(i))
+        }
+
+
+        console.log(chalk.green(KomoWorkspace.totalWorkspaces + ' workspaces created'))
+
+
     }
 
     getName() {
@@ -23,6 +37,14 @@ export default class Komo {
 
     stop() {
         return appName + ` stop`;
+    }
+
+    async restart(setup) {
+        this.exec(this.stop())
+        await sleep(1000);
+        this.exec(this.start())
+        await sleep(2000);
+        setup();
     }
 
     state() {
@@ -123,6 +145,7 @@ export default class Komo {
 
     focusWorkspace(target) {
         this.currentWorkspace = target;
+        console.log(chalk.blue(`Focus workspace: ${target+1}`));
         return appName + ` focus-workspace ${target}`;
     }
 
@@ -135,11 +158,10 @@ export default class Komo {
     }
 
     cycleWorkspace(cycleDirection) {
-        if(cycleDirection === 'left') this.currentWorkspace =
-            wrapNumber(this.currentWorkspace,  this.workspaceCount - 1, -1);
-        if(cycleDirection === 'right') this.currentWorkspace =
-            wrapNumber(this.currentWorkspace, this.workspaceCount - 1, 1);
-
+        const change =- (cycleDirection === 'left' ) ? -1 : 1;
+         this.currentWorkspace =
+            wrapNumber(this.currentWorkspace, this.workspaceCount - 1, change);
+        console.log(chalk.blue("Loading workspace...: " +  this.currentWorkspace));
         return appName + ` cycle-workspace ${cycleDirection}`;
     }
 
@@ -228,6 +250,7 @@ export default class Komo {
     }
 
     workspaceName(monitor, workspace, value) {
+        this.workspace[workspace].name = value;
         return appName + ` workspace-name ${monitor} ${workspace} ${value}`;
     }
 
@@ -360,17 +383,19 @@ export default class Komo {
     }
 
 
+    getCurrentWorkspace() {
+        return this.workspace[this.currentWorkspace];
+    }
+
+
     nextLayout() {
-        this.layoutIndex = wrapNumber(this.layoutIndex, layouts.length -1, 1)
-        console.log("Loading next layout: " +  layouts[this.layoutIndex])
-        return this.workspaceCustomLayout(0, this.currentWorkspace,`./config/${layouts[this.layoutIndex]}.json`)
+        const layout = this.getCurrentWorkspace().cycleLayout("next");
+        return this.workspaceCustomLayout(0, this.currentWorkspace,`./config/${layout}.json`)
     }
 
     previousLayout() {
-        this.layoutIndex = wrapNumber(this.layoutIndex, layouts.length -1, -1)
-
-        console.log("Loading previous layout: " +  layouts[this.layoutIndex])
-        return this.workspaceCustomLayout(0, this.currentWorkspace,`./config/${layouts[this.layoutIndex]}.json`)
+        const layout = this.getCurrentWorkspace().cycleLayout("previous");
+        return this.workspaceCustomLayout(0, this.currentWorkspace,`./config/${layout}.json`)
     }
 
 
