@@ -1,3 +1,7 @@
+
+export const APP_NAME = 'komorebic.exe'
+
+
 const layout = (name, isCustom) => {
     return {
         name: name,

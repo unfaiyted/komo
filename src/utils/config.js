@@ -19,6 +19,7 @@ export const setupAction = (app) => {
         app.identifyBorderOverflowApplication("exe", "POWERPNT.EXE"),
         app.identifyLayeredApplication("exe", "POWERPNT.EXE"),
         app.floatRule("title", "Microsoft Teams Notification"),
+        app.floatRule("exe", "Teams.exe"),
         app.identifyBorderOverflowApplication("exe", "ShareX.exe"),
         app.identifyTrayApplication("exe", "ShareX.exe"),
         app.loadCustomLayout("./config/three-wide.json"),
@@ -35,15 +36,15 @@ export const setupAction = (app) => {
         app.workspaceCustomLayout(0, 3, "./config/three-wide.json"),
 
         // Primary Workspace
-        app.workspaceRule(0, 0, "exe", "idea63.exe"),
+        //app.workspaceRule(0, 0, "exe", "idea63.exe"),
 
         // Communication Workspace
-        app.workspaceRule(0, 3, "exe", "OUTLOOK.EXE"),
-        app.workspaceRule(0, 3, "exe", "Teams.exe"),
-        app.workspaceRule(0, 4, "exe", "vpnui.exe"),
-        app.workspaceRule(0, 3, "exe", "msedge.exe"),
+        // app.workspaceRule(0, 3, "exe", "OUTLOOK.EXE"),
+        // app.workspaceRule(0, 3, "exe", "Teams.exe"),
+        // app.workspaceRule(0, 4, "exe", "vpnui.exe"),
+        // app.workspaceRule(0, 3, "exe", "msedge.exe"),
         app.subscribe("komo"),
-        app.completeConfiguration()
+        app.completeConfiguration(),
 
     ];
 }
