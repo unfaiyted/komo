@@ -388,14 +388,20 @@ export default class Komo {
     }
 
 
+
     nextLayout() {
         const layout = this.getCurrentWorkspace().cycleLayout("next");
-        return this.workspaceCustomLayout(0, this.currentWorkspace,`./config/${layout}.json`)
+        if(layout.isCustom) return this.workspaceCustomLayout(0, this.currentWorkspace,`./config/${layout.name}.json`)
+
+        return this.workspaceLayout(0, this.currentWorkspace, layout.name)
     }
 
     previousLayout() {
         const layout = this.getCurrentWorkspace().cycleLayout("previous");
         return this.workspaceCustomLayout(0, this.currentWorkspace,`./config/${layout}.json`)
+        if(layout.isCustom) return this.workspaceCustomLayout(0, this.currentWorkspace,`./config/${layout.name}.json`)
+
+        return this.workspaceLayout(0, this.currentWorkspace, layout.name)
     }
 
 

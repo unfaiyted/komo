@@ -12,7 +12,7 @@ export default class KomoWorkspace {
         this.name = name;
         this.layoutIndex = 0;
 
-        KomoWorkspace.totalWorkspaces = KomoWorkspace.totalWorkspaces+1;
+        KomoWorkspace.totalWorkspaces++;
 
     }
 
@@ -23,7 +23,7 @@ export default class KomoWorkspace {
         this.layoutIndex = wrapNumber(this.layoutIndex, layouts.length - 1, change);
         this.layout = layouts[this.layoutIndex];
 
-        console.log(chalk.blue("Loading previous layout: ", this.layout, this.toString()));
+        console.log(chalk.blue("Loading previous layout: ", this.layout.name, this.toString()));
 
         return this.layout;
 
