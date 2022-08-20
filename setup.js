@@ -21,7 +21,6 @@ console.log("Welcome. " + chalk.green("https://komo.com") + ".");
 
 // Tracks when a key is released and removes it from the keys list
 
-
 // Capture windows keypress events
 export const app = new Komo();
 
@@ -31,15 +30,12 @@ const setup = async () => {
 
 if(!disableKomoReload) {
     app.exec(app.stop(), {__approot, stdio: [0, 1, 2]});
-
     await sleep(1000)
     spawnChild(app.getName());
-
     await sleep(4000)
-
     await setup();
-
     console.log("app.getHistory():", app.getHistory())
+
 }
 
 app.registerShortcuts();

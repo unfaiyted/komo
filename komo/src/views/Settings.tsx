@@ -13,6 +13,10 @@ export const Settings = () => {
                     <button className="btn">Reload app</button>
                     <button className="btn">Stop app</button>
                     <button className="btn">Start app</button>
+
+
+
+
                 </div>
             </div>
         </div>
